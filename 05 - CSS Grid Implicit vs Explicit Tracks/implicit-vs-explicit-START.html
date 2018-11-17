@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <title>CSS Grid Implicit vs Explicit Grid Tracks!</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../assets/style.css">
-  <title>CSS Grid Implicit vs Explicit Grid Tracks!</title>
-</head>
+  <body>
+    <div class="container">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">6</div>
+      <div class="item">7</div>
+      <div class="item">8</div>
+      <div class="item">9</div>
+      <div class="item">10</div>
+    </div>
 
-<body>
-  <div class="container">
-    <div class="item">1</div>
-    <div class="item">2</div>
-    <div class="item">3</div>
-    <div class="item">4</div>
-  </div>
+    <style>
+      .container {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 200px 400px; /*here we ***EXPLICITLY*** defined that we need 2 columns*/
+        /*and this way the browser ***IMPLICITLY*** defines, that there will be 3 rows (because we have 6 divs in grid)*/
 
-  <style>
-    .container {
-      display: grid;
-    }
-  </style>
-</body>
+        /*but, if we add ***EXPLICITLY*** row sizes also (but only for the first 2 row)*/
+        grid-template-rows: 50px 100px;
+        /*then the third row size will be defined ***IMPLICITLY*** */
 
+        /*and if we want to size the ***IMPLICITLY*** defined rows:*/
+        grid-auto-rows: 200px;
+
+        /* or we can define also multiple sizes for ***IMPLICITLY* defined rows:*/
+        grid-auto-rows: 300px 200px;
+
+        /*and if you add this for columns here also: */
+        grid-auto-columns: 200px;
+        /* this does nothing, because by default if columns were defined (at grid-template-columns), there will be always that many columns in the grid*/
+      }
+    </style>
+  </body>
 </html>

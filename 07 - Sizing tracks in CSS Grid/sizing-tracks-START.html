@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <title>Sizing Tracks in CSS Grid!</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../assets/style.css">
-  <title>Sizing Tracks in CSS Grid!</title>
-</head>
+  <body>
+    <div class="container">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">it's wider than the others</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">6</div>
+      <div class="item">7</div>
+      <div class="item">8</div>
+      <div class="item">9</div>
+      <div class="item">10</div>
+      <div class="item">11</div>
+      <div class="item">12</div>
+      <div class="item">13</div>
+      <div class="item">14</div>
+      <div class="item">15</div>
+    </div>
 
-<body>
-  <div class="container">
-    <div class="item">1</div>
-    <div class="item">2</div>
-    <div class="item">3</div>
-    <div class="item">4</div>
-    <div class="item">5</div>
-    <div class="item">6</div>
-    <div class="item">7</div>
-    <div class="item">8</div>
-    <div class="item">9</div>
-    <div class="item">10</div>
-    <div class="item">11</div>
-    <div class="item">12</div>
-    <div class="item">13</div>
-    <div class="item">14</div>
-    <div class="item">15</div>
-  </div>
+    <style>
+      .container {
+        display: grid;
+        grid-gap: 20px;
+        border: 10px solid var(--yellow);
+        /*grid-template-columns: 25% 25% 25% 25%;*/
+        /*és ez kilóg.... miért? hát a grid-gap miatt... figyelni erre a valóságban, hogy ne menjen 100 fölé, ha fáj a vízszintes scrollbar*/
 
-  <style>
-    .container {
-      display: grid;
-      grid-gap: 20px;
-    }
-  </style>
-</body>
+        /* de százalék helyett inkább fr-t (fractional unit) használjunk*/
+        /*fr: a maradék helyet egyenletesen kitölti, annyiad részen, ahányas szám az adott fr előtt van - lásd a példát, érthető*/
+        /*auto: size depends the longest content*/
+        grid-template-columns: 200px 1fr auto 2fr;
 
+        /*how to do it for rows? because grid height depends on row heights, and row height by default depends on the item size it contains (here: font size)*/
+        /*so, first we should define a hard container height, then we can use fr*/
+        height: 600px;
+        grid-template-rows: 30% 3fr 2fr 1fr;
+      }
+    </style>
+  </body>
 </html>
