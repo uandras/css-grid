@@ -12,3 +12,203 @@ img {
   max-width: 100%;
 }
 
+.wrapper {
+  /*egy trükk, hogy ne kelljen mindenhova külön-külön margin-t tenni: */
+  display: grid;
+  grid-gap: 20px;
+}
+
+.top {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-areas:
+    "hero hero cta1"
+    "hero hero cta2";
+}
+
+.hero {
+  grid-area: hero;
+  min-height: 400px;
+  background: white url("images/taco.jpg");
+  background-size: cover;
+  background-position: bottom right;
+  padding: 50px;
+  /*if we do it with grid, the yellow background will not fit, because of the grid elements have uniform width: */
+  /*
+  display: grid;
+  justify-content: start;
+  align-content: center;
+  */
+  /*that's why we do it with flex: */
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.hero > * {
+  background-color: var(--yellow);
+}
+
+.cta {
+  background: var(--yellow);
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+}
+
+.cta p {
+  margin: 0;
+}
+
+.cta1 {
+  grid-area: cta1;
+}
+
+.cta2 {
+  grid-area: cta2;
+}
+
+.price {
+  font-size: 60px;
+  font-weight: 300;
+}
+
+.menu ul {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  padding: 0px;
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: var(--black);
+  padding: 5px;
+  background: var(--yellow);
+  /*a következő sor kell, hogy teljesen sárga legyen a háttér, ne csak a betűk mögött: */
+  display: block;
+}
+
+[aria-controls="menu-list"] {
+  display: none;
+}
+
+/*Features! */
+
+.features {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.feature {
+  background: white;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+/*about section:*/
+.about {
+  background: white;
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  align-items: center;
+}
+
+/*gallery part*/
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+}
+
+.gallery h2 {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+.gallery h2:before,
+.gallery h2:after {
+  background: linear-gradient(to left, var(--yellow), transparent);
+  display: block;
+  height: 10px;
+  content: "";
+}
+
+/*ez azért kell még egyszer, hogy megfordítsuk az árnyalatot*/
+.gallery h2:after {
+  background: linear-gradient(to right, var(--yellow), transparent);
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-areas:
+      "hero hero"
+      "cta1 cta2";
+  }
+}
+
+@media (max-width: 700px) {
+  .top {
+    grid-template-areas:
+      "hero"
+      "cta1"
+      "cta2";
+  }
+  .about {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menu {
+    /*mivel az egész oldal egy grid, így a legegyszerűbb a menüt feltenni a tetejére (order), ha kicsinyítjük az ablakméretet: */
+    order: -1;
+    /*ez a transition-nek ad egy kissé 3D-sebb effektet*/
+    perspective: 800px;
+  }
+  [aria-controls="menu-list"] {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /*alapból eltűntetjük a menüt: */
+  .menu ul {
+    max-height: 0;
+    overflow: hidden; /*ez azért kell, hogy teljesen tűnjön el a végén, ne maradjon egy felesleges pixelsor az ex-menü tetején*/
+    transform: rotateX(90deg);
+    transition: all 0.5s;
+  }
+  /*de ha aria-expanded=true, akkor megmutatjuk: */
+  [aria-expanded="true"] ~ ul {
+    max-height: 500px;
+    display: grid;
+    transform: rotateX(0);
+    transition: all 0.5s;
+  }
+
+  [aria-expanded="false"] .close {
+    display: none;
+  }
+  [aria-expanded="true"] .close {
+    display: inline-block;
+  }
+  [aria-expanded="true"] .open {
+    display: none;
+  }
+}
